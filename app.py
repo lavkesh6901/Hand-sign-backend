@@ -1,8 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
-import base64
-import time
 import os
 from keras.models import load_model
 
@@ -13,6 +11,11 @@ CORS(app)
 model = load_model("models/landmark_model.keras")
 with open("models/labels.txt", "r") as f:
     labels = [line.strip().split(maxsplit=1)[1] for line in f]
+
+# ✅ Root route to confirm backend is live
+@app.route('/')
+def home():
+    return "Backend is working!"
 
 @app.route('/predict', methods=['POST'])
 def predict():
